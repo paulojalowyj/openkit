@@ -1,0 +1,57 @@
+{
+  "type": "module",
+  "name": "@paulojalowyj/openkit",
+  "version": "0.1.0",
+  "description": "OpenKit - OpenCode Agent System - 15 specialized prompts, 33+ skills, validation scripts\n\nQuick Start:\n1. Install: npx @paulojalowyj/openkit init\n2. Start OpenCode: opencode\n3. Use workflows: /engineer, /plan, /impl, /test\n\nDocumentation: https://opencode.ai/docs",
+  "main": "index.js",
+  "bin": {
+    "openkit": "./bin/cli.js"
+  },
+  "scripts": {
+    "init": "node bin/cli.js init",
+    "doctor": "node bin/cli.js doctor",
+    "test": "echo \"No tests yet - implement integration tests\"",
+    "prepublishOnly": "node scripts/prepare.js",
+    "version": "node scripts/update-version.js && git add -A"
+  },
+  "files": [
+    "bin",
+    ".opencode",
+    "opencode.json",
+    "blueprints",
+    "scripts",
+    "PACKAGE_STATUS.md",
+    "LICENSE",
+    "README.md",
+    "README.pt-BR.md"
+  ],
+  "keywords": [
+    "ai",
+    "agents",
+    "opencode",
+    "coding-assistant",
+    "code-review",
+    "development-tools"
+  ],
+  "author": "OpenKit Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulojalowyj/openkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paulojalowyj/openkit/issues"
+  },
+  "homepage": "https://github.com/paulojalowyj/openkit#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "1.1.48",
+    "chalk": "^5.0.0",
+    "commander": "^12.0.0",
+    "fs-extra": "^11.0.0",
+    "glob": "^11.0.0",
+    "inquirer": "^9.2.0"
+  }
+}

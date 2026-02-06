@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Development
+.vscode/
+.idea/
+.env
+.env.*
+.DS_Store
+*.swp
+*.swo
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# Documentation drafts
+docs/DRAFT/
+*.draft.md
+
+# Test coverage
+coverage/
+
+# Misc
+.releaserc.json

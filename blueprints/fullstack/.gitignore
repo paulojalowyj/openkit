@@ -1,0 +1,54 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.suo
+*.sln
+
+# Shared
+node_modules/
+.env
+!.env.example
+.env.local
+.env.*.local
+dist/
+build/
+*.log
+
+# Backend specific
+backend/database.db
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/lib/
+backend/lib64/
+backend/*.egg-info/
+backend/*.egg
+backend/htmlcov/
+backend/.coverage
+backend/.coverage.*
+backend/.pytest_cache/
+backend/celerybeat-schedule
+backend/celerybeat.pid
+backend/.venv/
+backend/venv/
+backend/env/
+backend/ENV/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/pyrightconfig.json
+backend/poetry.toml
+
+# Frontend specific
+frontend/dist-ssr/
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/logs/
+
+# Docker volumes
+volumes/

@@ -1,0 +1,4 @@
+# ShadcnUI Components Directory
+
+Use o CLI do ShadcnUI para adicionar componentes:
+npx shadcn-ui@latest add button card input

@@ -1,0 +1,25 @@
+{
+  "branches": [
+    "main"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/npm",
+    "@semantic-release/changelog",
+    "@semantic-release/git"
+  ],
+  "preset": "conventionalcommits",
+  "releaseRules": [
+    {"breaking": true, "release": "major"},
+    {"revert": true, "release": "patch"},
+    {"type": "feat", "release": "minor"},
+    {"type": "fix", "release": "patch"},
+    {"type": "docs", "release": false},
+    {"type": "style", "release": false},
+    {"type": "chore", "release": false},
+    {"type": "refactor", "release": false},
+    {"type": "perf", "release": false},
+    {"type": "test", "release": false}
+  ]
+}

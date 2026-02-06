@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "{{PROJECT_IDENTIFIER}}-backend"
+version = "{{VERSION}}"
+description = "Backend for {{PROJECT_NAME}}"
+authors = ["{{AUTHOR}}"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+fastapi = { extras = ["standard"], version = "^0.112.2" }
+pydantic = "^2.8.2"
+sqlalchemy = "^2.0.34"
+pydantic-settings = "^2.4.0"
+psycopg = {extras = ["binary"], version = "^3.2.1"}
+celery = "^5.3.4"
+redis = "^5.0.1"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.0"
+pytest = "^8.3.0"
+
+[tool.taskipy.tasks]
+dev = 'fastapi dev app/main.py'
+worker = 'celery -A app.celery_app worker --loglevel=info'
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.ruff]
+line-length = 79
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

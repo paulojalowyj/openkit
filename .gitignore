@@ -1,0 +1,52 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node / Frontend
+node_modules/
+.opencode/node_modules/
+npm-debug.log*
+pnpm-debug.log*
+ yarn-error.log
+*.tsbuildinfo
+
+# Builds & Reports
+dist/
+build/
+.parcel-cache/
+.turbo/
+coverage/
+reports/
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env / Secrets
+.env
+.env.*
+*.env
+*.key
+*.pem
+
+# Misc
+.DS_Store?
+*.sqlite3
+tmp/
+
+# Generated files
+*.tgz
+package/
+
+# Development artifacts that should not be in published package
+.opencode/.opencodeignore
