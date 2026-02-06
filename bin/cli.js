@@ -375,7 +375,7 @@ async function copyBlueprint(blueprintName, targetDir, replacements) {
 program
   .name('openkit')
   .description('OpenKit - OpenCode Agent System in your project')
-  .version('0.1.1');
+  .version('0.2.0');
 
 program
   .command('init')

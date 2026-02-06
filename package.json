@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@paulojalowyj/openkit",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "OpenKit - OpenCode Agent System - 15 specialized prompts, 33+ skills, validation scripts\n\nQuick Start:\n1. Install: npx @paulojalowyj/openkit init\n2. Start OpenCode: opencode\n3. Use workflows: /engineer, /plan, /impl, /test\n\nDocumentation: https://opencode.ai/docs",
   "main": "index.js",
   "bin": {
