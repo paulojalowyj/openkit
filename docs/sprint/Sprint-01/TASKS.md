@@ -17,7 +17,7 @@ Regras:
 - Implementacao core (init manifest + upgrade planner/applier + flags + CI defaults): concluida.
 - Testes (`node --test`): concluido.
 - Revisao de seguranca (path traversal / symlink / backups): concluida.
-- Documentacao no README: pendente apenas de revisao de texto.
+- Documentacao no README: concluida.
 - Validacao final: automatizada concluida (`npm test` + `python .opencode/scripts/checklist.py .`); validacao manual do comando em um projeto real ainda pendente.
 
 ## Task Breakdown
