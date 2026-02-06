@@ -30,6 +30,19 @@ npx @paulojalowyj/openkit init --blueprint fullstack
 # (restart OpenCode TUI and use / commands)
 ```
 
+## Upgrade
+
+```bash
+# Preview changes (no writes)
+npx @paulojalowyj/openkit upgrade --dry-run
+
+# Apply safe upgrades (non-interactive defaults to skipping conflicts)
+npx @paulojalowyj/openkit upgrade
+
+# CI mode: fail job when customizations/conflicts exist
+npx @paulojalowyj/openkit upgrade --fail-on-changes
+```
+
 ## About OpenCode
 
 OpenCode is a terminal-based AI coding agent that OpenKit uses to execute commands and manage agents.

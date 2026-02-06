@@ -29,6 +29,19 @@ npx @paulojalowyj/openkit init --blueprint fullstack
 # (execute `opencode` no seu projeto e use os comandos /)
 ```
 
+## Upgrade
+
+```bash
+# Ver o plano (sem escrever arquivos)
+npx @paulojalowyj/openkit upgrade --dry-run
+
+# Aplicar upgrades seguros (sem TTY, conflitos sao pulados por default)
+npx @paulojalowyj/openkit upgrade
+
+# CI: falhar o job quando houver customizacoes/conflitos
+npx @paulojalowyj/openkit upgrade --fail-on-changes
+```
+
 ## Sobre o OpenCode
 
 OpenCode é um agente de código AI baseado em terminal que o OpenKit usa para executar comandos e gerenciar agentes.
