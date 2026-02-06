@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.0] - 2026-02-06
+
+### Added
+- Add `openkit upgrade` with a manifest-driven, CI-safe upgrade flow (dry-run, backups, conflict detection).
+- Generate `.opencode/openkit.manifest.json` during `openkit init` for drift detection and safe upgrades.
+- Add a real test suite using `node --test` covering planner/applier + path/symlink safety.
+- Add `/context` pack docs: `docs/CONTEXT.md`, `docs/QUALITY_GATES.md`, `docs/SECURITY.md`.
+
+### Fixed
+- Restrict `--blueprint` to known blueprints to prevent path traversal.
+
+---
+
 ## [0.1.0] - 2026-02-06
 
 ### Changed
