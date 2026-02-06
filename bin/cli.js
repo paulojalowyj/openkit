@@ -375,7 +375,7 @@ async function copyBlueprint(blueprintName, targetDir, replacements) {
 program
   .name('openkit')
   .description('OpenKit - OpenCode Agent System in your project')
-  .version('0.2.0');
+  .version('0.2.1');
 
 program
   .command('init')
@@ -482,18 +482,37 @@ program
     }
 
     console.log('');
-    console.log(chalk.green(' Successfully initialized OpenCode!'));
-    console.log(chalk.cyan('\n Next steps:'));
-    console.log('  1. Restart OpenCode TUI');
-    console.log('  2. Use /engineer, /plan, /debug, and other commands');
+    console.log(chalk.green('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+    console.log(chalk.green(' ✓ OpenKit installed successfully!'));
+    console.log(chalk.green('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+    console.log('');
+    console.log(chalk.cyan(' Next steps:'));
+    console.log('');
+    console.log(chalk.white('  1. Start OpenCode in your project:'));
+    console.log(chalk.yellow('     opencode'));
+    console.log('');
+    console.log(chalk.white('  2. Use available commands:'));
+    console.log(chalk.gray('     /engineer   - Universal builder with planning'));
+    console.log(chalk.gray('     /plan       - Create implementation plan'));
+    console.log(chalk.gray('     /impl       - Implement features'));
+    console.log(chalk.gray('     /test       - Run tests'));
+    console.log(chalk.gray('     /debug      - Systematic debugging'));
 
     if (options.blueprint) {
       console.log('');
-      console.log(chalk.cyan('Development:'));
-      console.log('  1. Start services: docker compose -f docker-compose.dev.yml up -d');
-      console.log('  2. Access backend: http://localhost:8000');
-      console.log('  3. Access frontend: http://localhost:5173');
+      console.log(chalk.cyan(' Development environment:'));
+      console.log('');
+      console.log(chalk.white('  1. Start services:'));
+      console.log(chalk.yellow('     docker compose -f docker-compose.dev.yml up -d'));
+      console.log('');
+      console.log(chalk.white('  2. Access application:'));
+      console.log(chalk.gray('     Backend:  http://localhost:8000'));
+      console.log(chalk.gray('     Frontend: http://localhost:5173'));
+      console.log(chalk.gray('     API Docs: http://localhost:8000/docs'));
     }
+    
+    console.log('');
+    console.log(chalk.green('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
     console.log('');
   });
 

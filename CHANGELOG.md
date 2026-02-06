@@ -12,6 +12,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.1] - 2026-02-06
+
+### Added
+- **Installation Prevention Mechanisms**: Three-layer system to prevent incorrect OpenKit installation
+  - `bin/postinstall-check.js`: Detects and warns when OpenKit is installed as a project dependency
+  - `index.js`: Blocks require/import attempts with helpful error message
+  - Enhanced `npx init` success message highlighting `opencode` command as first step
+- **Package Metadata**: Updated description and keywords (`cli-tool`, `npx-only`, `no-install-needed`) for clarity
+- **Documentation**: ADR 0001 documenting the decision and implementation details
+
+### Changed
+- All installation warning messages now in English (previously mixed)
+- Success message after `init` now uses visual borders and emphasizes `opencode` workflow
+
+---
+
 ## [0.2.0] - 2026-02-06
 
 ### Added

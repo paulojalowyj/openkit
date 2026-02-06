@@ -27,8 +27,11 @@ npx @paulojalowyj/openkit init
 npx @paulojalowyj/openkit init --blueprint fullstack
 
 # Use the OpenCode Framework
-# (restart OpenCode TUI and use / commands)
+# (run opencode in your project and use / commands)
+opencode
 ```
+
+> **Important:** Use `npx` to run OpenKit commands. Do not install OpenKit as a project dependency (`npm install @paulojalowyj/openkit`). OpenKit is a CLI tool, not a runtime library.
 
 ## Upgrade
 

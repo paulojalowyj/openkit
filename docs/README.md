@@ -15,9 +15,16 @@
 | **[Commands](COMMANDS.md)** | All 18 slash commands and their usage |
 | **[Workflows](WORKFLOW.md)** | Development workflows and best practices |
 | **[Blueprints](BLUEPRINTS.md)** | Project blueprints and how to use them |
+| **[Installation Prevention](INSTALLATION_PREVENTION.md)** | How OpenKit prevents incorrect installation |
 | **[Contributing](CONTRIBUTING.md)** | How to contribute to OpenKit |
 | **[Extending](EXTENDING.md)** | How to create custom agents, skills, and commands |
 | **[Frequently Asked Questions](FAQ.md)** | Common questions and troubleshooting |
+
+### Architecture Decision Records (ADRs)
+
+| ADR | Title | Status |
+|-----|-------|--------|
+| [ADR-0001](adr/ADR_0001_PREVENT_INCORRECT_INSTALLATION.md) | Prevent Incorrect OpenKit Installation | Accepted |
 
 ---
 
@@ -66,8 +73,11 @@ npx @paulojalowyj/openkit init
 npx @paulojalowyj/openkit init --blueprint fullstack
 
 # Use OpenKit
-# (Restart OpenCode TUI and use / commands)
+# (Run opencode in your project and use / commands)
+opencode
 ```
+
+> **Important:** Always use `npx` to run OpenKit commands. Do not install OpenKit as a project dependency. See [Installation Prevention](INSTALLATION_PREVENTION.md) for details.
 
 ### What Gets Installed?
 

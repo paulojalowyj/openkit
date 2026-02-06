@@ -27,7 +27,10 @@ npx @paulojalowyj/openkit init --blueprint fullstack
 
 # Usar o OpenKit
 # (execute `opencode` no seu projeto e use os comandos /)
+opencode
 ```
+
+> **Importante:** Use `npx` para executar comandos do OpenKit. Não instale o OpenKit como dependência do projeto (`npm install @paulojalowyj/openkit`). OpenKit é uma ferramenta CLI, não uma biblioteca de runtime.
 
 ## Upgrade
 

@@ -1,13 +1,14 @@
 {
   "type": "module",
   "name": "@paulojalowyj/openkit",
-  "version": "0.2.0",
-  "description": "OpenKit - OpenCode Agent System - 15 specialized prompts, 33+ skills, validation scripts\n\nQuick Start:\n1. Install: npx @paulojalowyj/openkit init\n2. Start OpenCode: opencode\n3. Use workflows: /engineer, /plan, /impl, /test\n\nDocumentation: https://opencode.ai/docs",
+  "version": "0.2.1",
+  "description": "Use 'npx @paulojalowyj/openkit init' (not npm install). OpenKit is a CLI tool for OpenCode Agent System - 15 specialized agents, 33+ skills, validation scripts.\n\nQuick Start:\n1. Install: npx @paulojalowyj/openkit init\n2. Start OpenCode: opencode\n3. Use workflows: /engineer, /plan, /impl, /test\n\nDocumentation: https://opencode.ai/docs",
   "main": "index.js",
   "bin": {
     "openkit": "bin/cli.js"
   },
   "scripts": {
+    "postinstall": "node bin/postinstall-check.js",
     "init": "node bin/cli.js init",
     "doctor": "node bin/cli.js doctor",
     "test": "node --test test/*.test.js",
@@ -16,6 +17,7 @@
   },
   "files": [
     "bin",
+    "index.js",
     ".opencode",
     "opencode.json",
     "blueprints",
@@ -26,6 +28,9 @@
     "README.pt-BR.md"
   ],
   "keywords": [
+    "cli-tool",
+    "npx-only",
+    "no-install-needed",
     "ai",
     "agents",
     "opencode",
