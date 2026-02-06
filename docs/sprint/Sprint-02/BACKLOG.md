@@ -10,7 +10,9 @@ Fonte de verdade: `docs/requirements/docs-standardization/USER_STORIES.md`.
 
 | ID | Item | Status |
 |---|---|---|
-| US-1 | Padrao unico de nomes (UPPER_SNAKE_CASE) | planned |
-| US-2 | Enxugar docs para o essencial | planned |
-| US-3 | Atualizar workflow OpenKit (rules/commands/prompts/templates) | planned |
-| US-4 | Templates para docs contextuais | planned |
+| US-1 | Padrao unico de nomes (UPPER_SNAKE_CASE) | done |
+| US-2 | Enxugar docs para o essencial | done |
+| US-3 | Atualizar workflow OpenKit (rules/commands/prompts/templates) | done |
+| US-4 | Templates para docs contextuais | done |
+
+Legenda de status: not_started | planned | in_progress | done
