@@ -10,7 +10,7 @@
   "scripts": {
     "init": "node bin/cli.js init",
     "doctor": "node bin/cli.js doctor",
-    "test": "echo \"No tests yet - implement integration tests\"",
+    "test": "node --test test/*.test.js",
     "prepublishOnly": "node scripts/prepare.js",
     "version": "node scripts/update-version.js && git add -A"
   },

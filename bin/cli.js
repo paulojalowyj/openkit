@@ -4,17 +4,29 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from 'fs';
 import { dirname } from 'path';
 import { execSync } from 'child_process';
 import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import { glob } from 'glob';
+import { writeInitManifest } from './lib/upgrade/init-manifest.js';
+import { runUpgrade } from './lib/upgrade/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const program = new Command();
+
+function getOpenkitVersion() {
+  try {
+    const pkgPath = path.join(__dirname, '..', 'package.json');
+    const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
+    if (pkg && typeof pkg.version === 'string') return pkg.version;
+  } catch {
+  }
+  return program.version();
+}
 
 function checkOpenCodeInstalled() {
   try {
@@ -147,6 +159,10 @@ async function copyDir(src, dest, root = src) {
 
     if (shouldIgnore(relativePath)) {
       continue;
+    }
+
+    if (entry.isSymbolicLink()) {
+      throw new Error(`Refusing to copy symlink: ${relativePath}`);
     }
 
     if (entry.isDirectory()) {
@@ -317,7 +333,31 @@ async function replacePlaceholders(dir, replacements) {
 }
 
 async function copyBlueprint(blueprintName, targetDir, replacements) {
-  const blueprintDir = path.join(__dirname, '..', 'blueprints', blueprintName);
+  const blueprintsRoot = path.join(__dirname, '..', 'blueprints');
+  const availableBlueprints = (() => {
+    try {
+      return readdirSync(blueprintsRoot, { withFileTypes: true })
+        .filter((e) => e.isDirectory())
+        .map((e) => e.name);
+    } catch {
+      return [];
+    }
+  })();
+
+  if (!blueprintName || typeof blueprintName !== 'string') {
+    throw new Error('Blueprint name is required');
+  }
+
+  if (blueprintName.includes('..') || blueprintName.includes('/') || blueprintName.includes('\\')) {
+    throw new Error('Invalid blueprint name');
+  }
+
+  if (!availableBlueprints.includes(blueprintName)) {
+    const hint = availableBlueprints.length > 0 ? ` Available: ${availableBlueprints.join(', ')}` : '';
+    throw new Error(`Blueprint "${blueprintName}" não encontrado.${hint}`);
+  }
+
+  const blueprintDir = path.join(blueprintsRoot, blueprintName);
 
   if (!existsSync(blueprintDir)) {
     throw new Error(`Blueprint "${blueprintName}" não encontrado`);
@@ -404,6 +444,8 @@ program
     const templateConfigPath = path.join(__dirname, '..', 'opencode.json');
     const targetConfigPath = path.join(projectDir, 'opencode.json');
 
+    const willWriteRootConfig = existsSync(templateConfigPath) && (!existsSync(targetConfigPath) || options.force);
+
     if (existsSync(templateConfigPath)) {
       if (existsSync(targetConfigPath) && !options.force) {
         console.log(chalk.yellow('Warning: opencode.json already exists, skipping'));
@@ -411,6 +453,20 @@ program
         copyFileSync(templateConfigPath, targetConfigPath);
         console.log(chalk.green(' Added opencode.json to project root'));
       }
+    }
+
+    // Write install manifest for safe upgrades (no extra console noise).
+    try {
+      await writeInitManifest({
+        fs,
+        projectRootAbs: projectDir,
+        templateDirAbs: templateDir,
+        templateRootConfigAbs: templateConfigPath,
+        openkitVersion: getOpenkitVersion(),
+        includeRootConfig: willWriteRootConfig
+      });
+    } catch (e) {
+      console.log(chalk.yellow(`Warning: failed to write manifest (${e.message})`));
     }
 
     if (options.blueprint) {
@@ -439,6 +495,99 @@ program
       console.log('  3. Access frontend: http://localhost:5173');
     }
     console.log('');
+  });
+
+program
+  .command('upgrade')
+  .description('Upgrade OpenCode configuration in current directory')
+  .option('--dry-run', 'Plan changes without writing')
+  .option('--yes', 'Assume defaults (TTY only); conflicts default to skip')
+  .option('--force', 'Overwrite all managed files (with backup)')
+  .option('--overwrite-changed', 'Overwrite customized files (with backup)')
+  .option('--fail-on-changes', 'Exit with code 2 if conflicts/customizations detected')
+  .option('--prune', 'Remove files no longer present in template (with backup)')
+  .option('--manifest-path <path>', 'Override manifest path (relative to project root)')
+  .action(async (options) => {
+    const projectDir = process.cwd();
+    const opencodeDir = path.join(projectDir, '.opencode');
+
+    try {
+      const st = await fs.lstat(opencodeDir);
+      if (st.isSymbolicLink()) throw new Error('.opencode is a symlink');
+      if (!st.isDirectory()) throw new Error('.opencode is not a directory');
+    } catch (e) {
+      if (e && (e.code === 'ENOENT' || e.code === 'ENOTDIR')) {
+        console.log('Missing .opencode directory. Run `openkit init` first.');
+        process.exit(1);
+      }
+      console.log(`Upgrade failed: ${e.message}`);
+      process.exit(1);
+    }
+
+    const isInteractive = Boolean(process.stdin.isTTY && process.stdout.isTTY);
+    const templateDir = path.join(__dirname, '..', '.opencode');
+    const templateRootConfig = path.join(__dirname, '..', 'opencode.json');
+    const hasTemplateRootConfig = existsSync(templateRootConfig);
+
+    try {
+      const result = await runUpgrade({
+        fs,
+        prompt: inquirer.prompt,
+        projectRootAbs: projectDir,
+        templateDirAbs: templateDir,
+        templateRootConfigAbs: hasTemplateRootConfig ? templateRootConfig : null,
+        openkitVersion: getOpenkitVersion(),
+        options: {
+          dryRun: Boolean(options.dryRun),
+          yes: Boolean(options.yes),
+          force: Boolean(options.force),
+          overwriteChanged: Boolean(options.overwriteChanged),
+          failOnChanges: Boolean(options.failOnChanges),
+          prune: Boolean(options.prune) || Boolean(options.force),
+          manifestPath: options.manifestPath,
+          isInteractive
+        }
+      });
+
+      const { buckets, backupsDir } = result;
+      const counts = {
+        added: buckets.add.length,
+        updated: buckets.update.length,
+        overwritten: buckets.overwrite.length,
+        removed: buckets.remove.length,
+        skipped: buckets.skip.length,
+        conflicts: buckets.conflicts.length,
+        orphaned: buckets.orphaned.length
+      };
+
+      const lines = [];
+      lines.push(`added: ${counts.added}`);
+      lines.push(`updated: ${counts.updated}`);
+      lines.push(`overwritten: ${counts.overwritten}`);
+      lines.push(`removed: ${counts.removed}`);
+      lines.push(`skipped: ${counts.skipped}`);
+      lines.push(`conflicts: ${counts.conflicts}`);
+      lines.push(`orphaned: ${counts.orphaned}`);
+      if (backupsDir) lines.push(`backups: ${backupsDir}`);
+      console.log(lines.join('\n'));
+
+      const shouldListAll = Boolean(options.dryRun);
+      const listBuckets = shouldListAll
+        ? ['add', 'update', 'overwrite', 'remove', 'skip', 'conflicts', 'orphaned']
+        : ['skip', 'conflicts', 'orphaned', 'remove'];
+
+      for (const key of listBuckets) {
+        const arr = buckets[key];
+        if (!arr || arr.length === 0) continue;
+        console.log(`\n${key}:`);
+        for (const p of arr.sort()) console.log(`  ${p}`);
+      }
+
+      process.exit(result.exitCode);
+    } catch (e) {
+      console.log(`Upgrade failed: ${e.message}`);
+      process.exit(1);
+    }
   });
 
 program
