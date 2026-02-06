@@ -80,7 +80,7 @@ function showOpenCodeNotInstalledError() {
 program
   .name('openkit')
   .description('Initialize OpenCode Agent System in your project')
-  .version('0.1.0');
+  .version('0.1.1');
 
 program
   .command('init')

@@ -22,7 +22,7 @@ Rationale:
 {
   "schemaVersion": 1,
   "managedBy": "@paulojalowyj/openkit",
-  "openkitVersion": "0.1.0",
+  "openkitVersion": "0.1.1",
   "installedAt": "2026-02-06T00:00:00-03:00",
   "projectRoot": ".",
   "managedPaths": [
@@ -34,7 +34,7 @@ Rationale:
       "path": ".opencode/rules/MASTER.md",
       "kind": "template",
       "baseSha256": "<sha256-of-template-content-at-install>",
-      "lastAppliedOpenkitVersion": "0.1.0",
+      "lastAppliedOpenkitVersion": "0.1.1",
       "decision": {
         "strategy": "follow-template",
         "onConflict": "prompt",
@@ -45,7 +45,7 @@ Rationale:
       "path": "opencode.json",
       "kind": "root-config",
       "baseSha256": "<sha256-of-template-content-at-install>",
-      "lastAppliedOpenkitVersion": "0.1.0",
+      "lastAppliedOpenkitVersion": "0.1.1",
       "decision": {
         "strategy": "follow-template",
         "onConflict": "prompt",
@@ -56,7 +56,7 @@ Rationale:
   "history": [
     {
       "type": "init",
-      "openkitVersion": "0.1.0",
+      "openkitVersion": "0.1.1",
       "timestamp": "2026-02-06T00:00:00-03:00"
     }
   ]
